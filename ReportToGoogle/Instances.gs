@@ -1,7 +1,10 @@
-/** 
+/**
+ * Function template below
+ */
 
+/*
 function updateExample() {
-  var googleSheetURL = "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_URL_HERE/edit";
+  var googleSheetURL = "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_HERE/edit";
   
   var options = {
     // Required: StarRez ReportID to run and load into Google Sheet.
@@ -17,3 +20,4 @@ function updateExample() {
   }
   updateGoogleSheetFromStarRez(googleSheetURL, options);
 }
+*/
