@@ -93,7 +93,7 @@
             {
               "keyValue": {
                 "topLabel": "Unblocked Beds Remaining",
-                "content": "{SELECT {SELECT SUM(Capacity) FROM RoomConfiguration JOIN RoomType JOIN RoomBase JOIN RoomConfigurationProfile WHERE ProfileItemID=50 AND RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID} AND DateStart<={NewData_CheckInDate} AND DateEnd>{NewData_CheckInDate}}-{SELECT COUNT(BookingID) FROM Booking JOIN RoomSpace JOIN RoomBase JOIN RoomConfiguration ON RoomBase.RoomBaseID=RoomConfiguration.RoomBaseID AND DateStart<={NewData_CheckInDate} AND DateEnd>{NewData_CheckInDate} JOIN RoomConfigurationProfile ON RoomConfiguration.RoomConfigurationID=RoomConfigurationProfile.RoomConfigurationID AND ProfileItemID=50 WHERE CheckInDate<{NewData_CheckOutDate} AND CheckOutDate>{NewData_CheckInDate} AND RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID}}}"
+                "content": "{SELECT {SELECT SUM(Capacity) FROM RoomConfiguration JOIN RoomType JOIN RoomBase JOIN RoomConfigurationProfile WHERE ProfileItemID=50 AND RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID} AND DateStart<={NewData_CheckInDate} AND DateEnd>{NewData_CheckInDate}} - {SELECT COUNT(BookingID) FROM Booking JOIN RoomSpace JOIN RoomBase JOIN RoomConfiguration ON RoomBase.RoomBaseID=RoomConfiguration.RoomBaseID AND DateStart<={NewData_CheckInDate} AND DateEnd>{NewData_CheckInDate} JOIN RoomConfigurationProfile ON RoomConfiguration.RoomConfigurationID=RoomConfigurationProfile.RoomConfigurationID AND ProfileItemID=50 WHERE CheckInDate<{NewData_CheckOutDate} AND CheckOutDate>{NewData_CheckInDate} AND RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID}}}"
               }
             },
             {
@@ -115,7 +115,7 @@
             {
               "keyValue": {
                 "topLabel": "Total Beds Remaining",
-                "content": "{SELECT {SELECT SUM(Capacity) FROM RoomConfiguration JOIN RoomType JOIN RoomBase WHERE RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID} AND DateStart<={NewData_CheckInDate} AND DateEnd>{NewData_CheckInDate}}-{SELECT COUNT(RoomSpaceID) FROM Booking WHERE RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID} AND EntryStatusEnum<>70 AND CheckInDate<{NewData_TermSessionID.CheckOutDate} AND CheckOutDate>{NewData_TermSessionID.CheckInDate}}}"
+                "content": "{SELECT {SELECT SUM(Capacity) FROM RoomConfiguration JOIN RoomType JOIN RoomBase WHERE RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID} AND DateStart<={NewData_CheckInDate} AND DateEnd>{NewData_CheckInDate}} - {SELECT COUNT(RoomSpaceID) FROM Booking WHERE RoomLocationID={NewData_RoomSpaceID.RoomBaseID.RoomLocationID} AND EntryStatusEnum<>70 AND CheckInDate<{NewData_TermSessionID.CheckOutDate} AND CheckOutDate>{NewData_TermSessionID.CheckInDate}}}"
               }
             },
             {
