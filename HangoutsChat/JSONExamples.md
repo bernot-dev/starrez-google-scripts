@@ -3,7 +3,13 @@
 Here are a few examples of ways that you can use Data Subscriptions to post directly into a Google Hangouts Chat room. This maps a [StarRez "Post to Web Service" Data Subscription](https://support.starrez.com/hc/en-us/articles/115000379306-Data-Subscription-Wizard-Step-3-Select-a-Task-Post-to-Web-Service-) to a [Google Hangouts Chat Incoming Webhook](https://developers.google.com/hangouts/chat/how-tos/webhooks).
 
 
-## New Booking
+## New Booking Card
+
+### Image
+![New Booking Card](../HangoutsChat/NewBookingCard.png "New Booking Card")
+
+
+### JSON
 ```json
 {
 	"cards": [
