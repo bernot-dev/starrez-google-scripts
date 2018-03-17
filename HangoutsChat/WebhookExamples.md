@@ -18,7 +18,7 @@ How to: [Define an incoming webhook](https://developers.google.com/hangouts/chat
 - Data: *See examples below*
 
 ### What should we call this Post to a Web Service Subscription?
-- Name: *Whatever you like*
+- Name: *Name of your choice*
 - Enabled: **Checked**
 - Active Start Date: *Optional*
 - Active End Date: *Optional*
