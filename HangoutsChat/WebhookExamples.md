@@ -8,9 +8,7 @@ How to: [Define an incoming webhook](https://developers.google.com/hangouts/chat
 ## Data Subscription Setup
 
 ### On what Action should we Post to a Web Service?
-- When data is...**inserted into the selected table**
-- Table Name: **Booking**
-- Filter Records: *Optional*
+*See examples below*
 
 ### On Data Inserted, Post to a Web Service with the following information
 - URL: **Your webhook URL** from Google Hangouts Chat
@@ -31,7 +29,11 @@ How to: [Define an incoming webhook](https://developers.google.com/hangouts/chat
 ### Card Appearance in Hangouts Chat
 ![New Booking Card](../HangoutsChat/NewBookingCard.png "New Booking Card")
 
-#### Data for StarRez Web Service Post
+### On what Action should we Post to a Web Service?
+- When data is...**inserted into the selected table**
+- Table Name: **Booking**
+
+### Data for StarRez Web Service Post
 ```json
 {
 	"cards": [
