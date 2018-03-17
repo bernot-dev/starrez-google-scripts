@@ -5,11 +5,11 @@ Here are a few examples of ways that you can use Data Subscriptions to post dire
 
 ## New Booking Card
 
-### Card
+### Card Appearance in Hangouts Chat
 ![New Booking Card](../HangoutsChat/NewBookingCard.png "New Booking Card")
 
 
-### JSON
+### Data for StarRez Web Service Post
 ```json
 {
 	"cards": [
