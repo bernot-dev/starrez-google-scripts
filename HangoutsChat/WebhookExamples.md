@@ -1,15 +1,36 @@
-# Post Data Examples for Hangouts Chat Webhooks
+# Data Subscription posts to Google Hangouts Chat
 
 Here are a few examples of ways that you can use Data Subscriptions to post directly into a Google Hangouts Chat room. This maps a [StarRez "Post to Web Service" Data Subscription](https://support.starrez.com/hc/en-us/articles/115000379306-Data-Subscription-Wizard-Step-3-Select-a-Task-Post-to-Web-Service-) to a [Google Hangouts Chat Incoming Webhook](https://developers.google.com/hangouts/chat/how-tos/webhooks).
 
+How to: [Define an incoming webhook](https://developers.google.com/hangouts/chat/how-tos/webhooks#define_an_incoming_webhook) in Google Hangouts Chat
+
+
+## Data Subscription Setup
+
+### On what Action should we Post to a Web Service?
+- When data is...**inserted into the selected table**
+- Table Name: **Booking**
+
+### On Data Inserted, Post to a Web Service with the following information
+- URL: **Your webhook URL** from Google Hangouts Chat
+- Method: **POST**
+- Auth Method: **None**
+- Content Type: **application/json**
+- Data: *See examples below*
+
+### What should we call this Post to a Web Service Subscription?
+- Name: *Whatever you like*
+- Enabled: **Checked**
+- Active Start Date: *Optional*
+- Active End Date: *Optional*
+- Comments: *Optional*
 
 ## New Booking Card
 
 ### Card Appearance in Hangouts Chat
 ![New Booking Card](../HangoutsChat/NewBookingCard.png "New Booking Card")
 
-
-### Data for StarRez Web Service Post
+#### Data for StarRez Web Service Post
 ```json
 {
 	"cards": [
