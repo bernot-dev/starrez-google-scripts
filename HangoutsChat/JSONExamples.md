@@ -5,7 +5,6 @@ Here are a few examples of ways that you can use Data Subscriptions to post dire
 
 ## New Booking
 ```json
-<pre>
 {
 	"cards": [
 		{
