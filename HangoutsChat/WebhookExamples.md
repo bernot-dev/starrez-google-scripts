@@ -10,6 +10,7 @@ How to: [Define an incoming webhook](https://developers.google.com/hangouts/chat
 ### On what Action should we Post to a Web Service?
 - When data is...**inserted into the selected table**
 - Table Name: **Booking**
+- Filter Records: *Optional*
 
 ### On Data Inserted, Post to a Web Service with the following information
 - URL: **Your webhook URL** from Google Hangouts Chat
