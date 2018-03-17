@@ -18,7 +18,7 @@ Instructions:
 
 This script (which lives in Webhook.gs) can be used to make a "live feed" in a Google Sheet by inserting a row and data before row 2 on the spreadsheet, then deleting the last row of the spreadsheet. The app must be [deployed as a WebApp](https://developers.google.com/apps-script/guides/web#deploying_a_script_as_a_web_app) to receive web services posts from StarRez.
 
-![Live Feed animation](../blob/master/GoogleDocs/Live%20Feed.gif "Live Feed animation")
+![Live Feed animation](../GoogleDocs/Live%20Feed.gif "Live Feed animation")
 
 Expected format for posts coming from StarRez
 ```json
