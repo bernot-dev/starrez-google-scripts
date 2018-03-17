@@ -5,7 +5,7 @@ Here are a few examples of ways that you can use Data Subscriptions to post dire
 
 ## New Booking Card
 
-### Image
+### Card
 ![New Booking Card](../HangoutsChat/NewBookingCard.png "New Booking Card")
 
 
