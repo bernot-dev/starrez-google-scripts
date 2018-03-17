@@ -1,6 +1,6 @@
 # Data Subscription posts to Google Hangouts Chat
 
-Here are a few examples of ways that you can use Data Subscriptions to post directly into a Google Hangouts Chat room. This maps a [StarRez "Post to Web Service" Data Subscription](https://support.starrez.com/hc/en-us/articles/115000379306-Data-Subscription-Wizard-Step-3-Select-a-Task-Post-to-Web-Service-) to a [Google Hangouts Chat Incoming Webhook](https://developers.google.com/hangouts/chat/how-tos/webhooks).
+Here are a few examples of ways that you can use Data Subscriptions to post directly into a Google Hangouts Chat room. This process maps a [StarRez "Post to Web Service" Data Subscription](https://support.starrez.com/hc/en-us/articles/115000379306-Data-Subscription-Wizard-Step-3-Select-a-Task-Post-to-Web-Service-) to a [Google Hangouts Chat Incoming Webhook](https://developers.google.com/hangouts/chat/how-tos/webhooks).
 
 How to: [Define an incoming webhook](https://developers.google.com/hangouts/chat/how-tos/webhooks#define_an_incoming_webhook) in Google Hangouts Chat
 
