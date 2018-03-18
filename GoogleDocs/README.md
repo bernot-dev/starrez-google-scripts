@@ -16,7 +16,7 @@ Instructions:
 
 # Google Sheet "Live Feed"
 
-This script (which lives in Webhook.gs) can be used to make a "live feed" in a Google Sheet by inserting a row and data before row 2 on the spreadsheet, then deleting the last row of the spreadsheet. The app must be [deployed as a WebApp](https://developers.google.com/apps-script/guides/web#deploying_a_script_as_a_web_app) to receive web services posts from StarRez.
+This action (which lives in Webhook.gs) can be used to make a "live feed" in a Google Sheet by inserting a row and data before row 2 on the spreadsheet, then deleting the last row of the spreadsheet. The app must be [deployed as a WebApp](https://developers.google.com/apps-script/guides/web#deploying_a_script_as_a_web_app) to receive web services posts from StarRez.
 
 ![Live Feed animation](../GoogleDocs/Live%20Feed.gif "Live Feed animation")
 
@@ -29,3 +29,28 @@ Expected format for posts coming from StarRez
   "values": ["COLUMN_1_VALUE", "COLUMN_2_VALUE", ..., "COLUMN_N_VALUE" ]
 }
 ```
+
+# Google Sheet "Live Delete Row"
+
+This action can be used to delete a row from a Google Sheet based on criteria posted to this web app. For instance, if you keep a housing availability list in a Google Sheet, you could delete rooms as they are booked in near real-time. Or, you could keep a list of students remaining to check in and delete them from the list as they check in. This can be more effecient and faster than refreshing a report over and over.
+
+Expected format for posts coming from StarRez
+```json
+{
+  "action": "deleteRowsFromSheet",
+  "spreadsheetId": "YOUR_SPREADSHEET_ID",
+  "sheet": "YOUR_SHEET",
+  "matchOn": [
+    {
+      "key": "ID1",
+      "value": "012345678"
+    },
+    {
+      "key": "Name Last",
+      "value": "Bernot"
+    }
+  ]
+}
+
+```
+*This example post will delete every row it finds in `YOUR_SHEET` where the values under the `ID1` and `Name Last` column headings are `012345678` and `Bernot`, respectively. If you only want to delete one row, you must specify `matchOn` criteria that uniquely identify the row.*
