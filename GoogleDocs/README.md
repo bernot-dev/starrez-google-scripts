@@ -26,15 +26,6 @@ Expected format for posts coming from StarRez
   "action": "updateLiveFeed",
   "spreadsheetId": "YOUR_SPREADSHEET_ID",
   "sheet": "YOUR_SHEET",
-  "matchOn": [
-  {
-    "key": "ID1",
-    "value": "012345678"
-  },
-  {
-    "key": "Name Last",
-    "value": "Bernot"
-  }
-  
+  "values": ["COLUMN_1_VALUE", "COLUMN_2_VALUE", ..., "COLUMN_N_VALUE" ]
 }
 ```
