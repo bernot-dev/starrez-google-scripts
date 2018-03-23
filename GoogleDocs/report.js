@@ -94,9 +94,15 @@ function updateGoogleSheetFromStarRez(options) {
   if (report === undefined) {
     Logger.log("Skipping processing of ReportID: " + options.reportId);
   } else {
+    var frozenRows = sheet.getFrozenRows();
+    if (frozenRows===0) {
+      sheet.setFrozenRows(1);
+      frozenRows = 1;
+    }
+    
     var reportRows;
     var reportCols;
-    var dataStartRow = 1;
+    var dataStartRow = frozenRows;
     var dataStartCol = 1;
     
     // Populate new data
@@ -105,8 +111,9 @@ function updateGoogleSheetFromStarRez(options) {
       reportRows = 1;
       reportCols = 1;
 
-      sheet.getRange(dataStartRow, dataStartCol, 1, sheet.getMaxColumns()).clearContent();
-      sheet.getRange(dataStartRow, dataStartCol).setValue("There aren't any records to display");
+      sheet.getRange((frozenRows+1)+":"+sheet.getMaxRows()).clearContent();
+      var errorMessage = typeof options.noRecordsMessage === "string" ? options.noRecordsMessage : "There aren't any records to display";
+      sheet.getRange(frozenRows+1,1).setValue(errorMessage);
     } else {
       // Otherwise, populate report
       reportRows = report.length;
@@ -117,8 +124,8 @@ function updateGoogleSheetFromStarRez(options) {
     }
     
     // Delete excess rows
-    var firstUnneededRow = dataStartRow+reportRows;
-    var rowsToDelete = sheet.getMaxRows() - (dataStartRow - 1 + reportRows);
+    var firstUnneededRow = frozenRows+reportRows;
+    var rowsToDelete = sheet.getMaxRows() - (firstUnneededRow);
     if (rowsToDelete > 0) {
       sheet.deleteRows(firstUnneededRow, rowsToDelete);
     }
