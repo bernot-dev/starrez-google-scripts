@@ -15,7 +15,7 @@
  */
 function updateExample() {
   "use strict";
-  // Make a JSON object that will hold all of the options
+  // Make an object that will hold all of the options
   var options = {
 
     // Required: Google Sheets spreadsheetId (or spreadsheetUrl)
@@ -30,7 +30,10 @@ function updateExample() {
     },
 
     // Optional: Load report data into a specific sheet (by index or name) within the spreadsheet. Defaults to first sheet, if not specified.
-    "sheet": "TestSheet"
+    "sheet": "TestSheet",
+    
+    // Optional: Specify an error message to display when the report has no results.
+    "noRecordsMessage": "There are no examples to display."
   };
 
   // Call the update function to run it
