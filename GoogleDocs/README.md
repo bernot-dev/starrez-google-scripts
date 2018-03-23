@@ -54,3 +54,46 @@ Expected format for posts coming from StarRez
 
 ```
 *This example post will delete every row it finds in `YOUR_SHEET` where the values under the `ID1` and `Name Last` column headings are `012345678` and `Bernot`, respectively. If you only want to delete one row, you must specify `matchOn` criteria that uniquely identify the row.*
+
+# StarQL Audit
+
+This function can be used to run a series of test cases with a summary of the status of each test on a "Summary" sheet in the specified spreadsheet. Queries pass if there are no results, and fail then display the results in a new sheet if there are results. Each test case has a `name` and a `query` property.
+
+## Audit Summary Screenshot
+![Audit Summary screenshot](../GoogleDocs/Audit%20Summary.png "Audit Summary screenshot")
+
+## Audit Details Screenshot
+![Audit Details screenshot](../GoogleDocs/Audit%20Details.png "Audit Details screenshot")
+
+## Example function
+
+```javascript
+function runAudit() {
+  var options = {
+    "spreadsheetId": "YOUR_SPREADSHEET_ID",
+    "testCases": [
+      {
+        "name": "Testing Users with Active Bookings",
+        "query": "SELECT EntryID, ID1, NameFirst, NameLast, TermSession, RoomSpace, RoomType, EntryStatusEnum.Description AS BookingStatus \
+                  FROM Booking \
+                    LEFT JOIN Entry \
+                    LEFT JOIN EntryStatusEnum \
+                  WHERE Booking.EntryStatusEnum<>Cancelled \
+                    AND Entry.Testing=True \
+                    AND RoomSpaceID<>0"
+      },
+      {
+        "name": "Untagged Transactions Created Before Yesterday",
+        "query": "SELECT TransactionID, ID1, NameLast, NameFirst, TermSession, ChargeGroup, ChargeItem, Description, Amount, TransactionDate, SecurityUser.FullName AS CreatedBy \
+                  FROM Transaction \
+                    LEFT JOIN Entry \
+                    LEFT JOIN SecurityUser \
+                  WHERE Testing=False \
+                    AND TransactionDate < ADD(Date,-1,days) \
+                    AND TagFinance=0"
+      }
+    ]
+  };
+  audit(options);
+}
+```
