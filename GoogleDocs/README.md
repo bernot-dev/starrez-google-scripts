@@ -13,6 +13,41 @@ Instructions:
 - "getreport" calls do respect report permissions, and reports in your personal folder only seem to be accessible if you call the API using credentials for the same SecurityUser. If you get an Error 404 when you call the "getreport" function, chances are good that the problem is related to permissions.
 - The Google Apps Script Host does occassionally fail when it is triggered for a variety of reasons that can be classified as "intermittent errors." If it is critical you populate/refresh a sheet at a regular interval, keep this in mind and compensate by reviewing errors as they are triggered and/or making more frequent/redundant calls. For instance, we publicize that our Housing Availability List will refresh every 15 minutes, and set it to trigger every 5 minutes. That way, the script has also certainly run sucessfully at least once every 15 minutes.
 
+## Example Function
+```javascript
+function updateExample() {
+    "use strict";
+
+    // Make a JSON object that will hold all of the options
+    var options = {
+
+        // Required: Google Sheets spreadsheetId (or spreadsheetUrl)
+        "spreadsheetId": "YOUR_GOOGLE_SHEET_URL_HERE",
+
+        // Required: StarRez ReportID to run and load into Google Sheet.
+        "reportId": "100",
+
+        // Optional: Set values of any parameters/variables on the report.
+        "requestBody": {
+            "Testing": 1
+        },
+
+        // Optional: Load report data into a specific sheet (by index or name) within the spreadsheet. Defaults to first sheet, if not specified.
+        "sheet": "TestSheet"
+    };
+
+    // Call the update function to run it
+    updateGoogleSheetFromStarRez(options);
+
+    /**
+     * Note that you can make related calls by just changing the options that are different. For example:
+     *
+     * options.requestBody.Testing = 0;
+     * options.sheet = "Non-Test Sheet";
+     * updateGoogleSheetFromStarRez(options);
+     */
+}
+```
 
 # Google Sheet "Live Feed"
 
