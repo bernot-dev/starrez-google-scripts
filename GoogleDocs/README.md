@@ -100,7 +100,7 @@ This function can be used to run a series of test cases with a summary of the st
 ## Audit Details Screenshot
 ![Audit Details screenshot](../GoogleDocs/Audit%20Details.png "Audit Details screenshot")
 
-## Example function
+## Example Function
 
 ```javascript
 function runAudit() {
