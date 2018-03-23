@@ -21,7 +21,7 @@ function setupScriptProperties() {
   
   
   var scriptProperties = PropertiesService.getScriptProperties();
-  scriptProperties.setProperty("STARREZ_API_ENDPOINT", "https://"+CUSTOMER_SHORTNAME+".starrezhousing.com/StarRezRest/");
+  scriptProperties.setProperty("STARREZ_API_ENDPOINT", "https://"+CUSTOMER_SHORTNAME+".starrezhousing.com/StarRezRest");
   
   var userProperties = PropertiesService.getUserProperties();
   var credentials = Utilities.base64Encode(USERNAME + ":" + TOKEN, Utilities.Charset.UTF_8);
