@@ -14,7 +14,7 @@ function getStarRezReport (options) {
     throw new Error("StarRez \"reportId\" is required, but was not defined.");
   }
 
-  // Assemble path
+  // Assemble request path
   var path = "/services/getreport/" + options.reportId;
 
   // Set request parameters for web request
