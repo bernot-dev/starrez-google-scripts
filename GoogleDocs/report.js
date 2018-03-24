@@ -1,90 +1,45 @@
-/* global getSheet */
+/* global callApi getSheet objectArrayTo2dArray */
 
 /* exported updateGoogleSheetFromStarRez */
 
 /**
  * Retrieve report from StarRez using getreport API as a 2D array of strings
- * @param {object} options The Description, WebDescription, or Building Code (CustomString1) of a RoomLocation
+ * @param {object} options The Description, WebDescription, or Building Code
+ * (CustomString1) of a RoomLocation
  * @return {string[][]}
  */
-function getStarRezReport(options) {
-  "use strict";
-
-  // Ensure credentials are set
-  var credentials = PropertiesService.getUserProperties().getProperty("STARREZ_CREDENTIALS");
-  if (credentials === null) {
-    throw "StarRez credentials could not be found. Please run setup function.";
-  }
-
-  // Ensure API endpoint is set
-  var endpoint = PropertiesService.getScriptProperties().getProperty("STARREZ_API_ENDPOINT");
-  if (endpoint === null) {
-    throw "StarRez API endpoint could not be found. Please run setup function.";
-  }
-
+function getStarRezReport (options) {
   // Ensure Report ID is set
   if (options.reportId === undefined) {
-    throw "StarRez \"reportId\" is required, but was not defined.";
+    throw new Error("StarRez \"reportId\" is required, but was not defined.");
   }
 
-  // Assemble request URL
-  var reportUrl = endpoint + "services/getreport/" + options.reportId;
+  // Assemble path
+  var path = "/services/getreport/" + options.reportId;
 
   // Set request parameters for web request
-  var params = {
-    headers: {
-      "Accept": "application/json",
-      "Authorization": credentials
-    },
-    "muteHttpExceptions": true
-  };
+  var params = {};
 
-  // If requestBody parameter exists, change method to POST and set requestBody as payload.
+  /**
+   * If requestBody parameter exists, change method to POST and set requestBody
+   * as payload.
+   */
   if (options.requestBody !== undefined) {
-    params.method = "post";
+    params.contentType = "application/json";
     params.payload = JSON.stringify(options.requestBody);
   }
 
-  // Request the report as JSON
-  var resp = UrlFetchApp.fetch(reportUrl, params);
-  if (resp === undefined) {
-    throw "HTTP response undefined!";
-  }
-  if (resp.getResponseCode() !== 200) {
-    var errors = JSON.parse(resp.getContentText());
-    Logger.log("HTTP Error " + resp.getResponseCode() + " encountered while processing ReportID " + options.reportId);
-    Logger.log(errors[0].description);
-    if (errors[0].description === "Error rendering report: There aren't any records to display") {
-      return null;
-    }
-    else {
-      return undefined;
-    }
-  }
-  var report = JSON.parse(resp.getContentText());
-
-  var mapped2dArray = report.map(function (row) {
-    var array = [];
-    for (var value in row) {
-      array.push(row[value]);
-    }
-    return array;
-  });
-  var keys = (Object.keys(report[0])).map(function (str) {
-    return str.replace(/_/g," ");
-  });
-  mapped2dArray.unshift(keys);
-  return mapped2dArray;
+  var report = callApi(path, params);
+  return objectArrayTo2dArray(report);
 }
 
 /**
  * Populate a Google Sheet with data from a StarRez report
- * @param {object} options Must specify at least spreadsheetId/spreadsheetUrl of Google Sheet and ReportID of StarRez report
+ * @param {object} options Must specify at least spreadsheetId/spreadsheetUrl of
+ * Google Sheet and ReportID of StarRez report
  * @return {RoomLocation}
  */
-function updateGoogleSheetFromStarRez(options) {
-  "use strict";
-
+function updateGoogleSheetFromStarRez (options) {
   // Retrieve sheet from Google Spreadsheet
   var sheet = getSheet(options);
 
@@ -95,7 +50,7 @@ function updateGoogleSheetFromStarRez(options) {
     Logger.log("Skipping processing of ReportID: " + options.reportId);
   } else {
     var frozenRows = sheet.getFrozenRows();
-    if (frozenRows===0) {
+    if (frozenRows === 0) {
       sheet.setFrozenRows(1);
       frozenRows = 1;
     }
@@ -111,21 +66,28 @@ function updateGoogleSheetFromStarRez(options) {
       reportRows = 1;
       reportCols = 1;
 
-      sheet.getRange((frozenRows+1)+":"+sheet.getMaxRows()).clearContent();
-      var errorMessage = typeof options.noRecordsMessage === "string" ? options.noRecordsMessage : "There aren't any records to display";
-      sheet.getRange(frozenRows+1,1).setValue(errorMessage);
+      sheet.getRange(frozenRows + 1 + ":" + sheet.getMaxRows()).clearContent();
+      var errorMessage = typeof options.noRecordsMessage === "string"
+        ? options.noRecordsMessage
+        : "There aren't any records to display";
+      sheet.getRange(frozenRows + 1, 1).setValue(errorMessage);
     } else {
       // Otherwise, populate report
       reportRows = report.length;
       reportCols = report[0].length;
 
-      var targetRange = sheet.getRange(dataStartRow, dataStartCol, reportRows, reportCols);
+      var targetRange = sheet.getRange(
+        dataStartRow,
+        dataStartCol,
+        reportRows,
+        reportCols
+      );
       targetRange.setValues(report);
     }
 
     // Delete excess rows
-    var firstUnneededRow = frozenRows+reportRows;
-    var rowsToDelete = sheet.getMaxRows() - (firstUnneededRow);
+    var firstUnneededRow = frozenRows + reportRows;
+    var rowsToDelete = sheet.getMaxRows() - firstUnneededRow;
     if (rowsToDelete > 0) {
       sheet.deleteRows(firstUnneededRow, rowsToDelete);
     }

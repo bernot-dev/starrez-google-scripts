@@ -1,5 +1,6 @@
 .clasp.json
 .git
+.vscode/*
 node_modules/*
 GoogleDocs/triggerable.js
 Test/*
