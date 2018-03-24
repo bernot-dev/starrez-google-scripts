@@ -15,13 +15,13 @@ function getStarRezReport(options) {
   if (credentials === null) {
     throw "StarRez credentials could not be found. Please run setup function.";
   }
-  
+
   // Ensure API endpoint is set
   var endpoint = PropertiesService.getScriptProperties().getProperty("STARREZ_API_ENDPOINT");
   if (endpoint === null) {
     throw "StarRez API endpoint could not be found. Please run setup function.";
   }
-  
+
   // Ensure Report ID is set
   if (options.reportId === undefined) {
     throw "StarRez \"reportId\" is required, but was not defined.";
@@ -62,7 +62,7 @@ function getStarRezReport(options) {
     }
   }
   var report = JSON.parse(resp.getContentText());
-  
+
   var mapped2dArray = report.map(function (row) {
     var array = [];
     for (var value in row) {
@@ -90,7 +90,7 @@ function updateGoogleSheetFromStarRez(options) {
 
   // Retrieve StarRez Report as 2D array
   var report = getStarRezReport(options);
-  
+
   if (report === undefined) {
     Logger.log("Skipping processing of ReportID: " + options.reportId);
   } else {
@@ -99,12 +99,12 @@ function updateGoogleSheetFromStarRez(options) {
       sheet.setFrozenRows(1);
       frozenRows = 1;
     }
-    
+
     var reportRows;
     var reportCols;
     var dataStartRow = frozenRows;
     var dataStartCol = 1;
-    
+
     // Populate new data
     if (report === null) {
       // If report returned no results, leave a message
@@ -122,7 +122,7 @@ function updateGoogleSheetFromStarRez(options) {
       var targetRange = sheet.getRange(dataStartRow, dataStartCol, reportRows, reportCols);
       targetRange.setValues(report);
     }
-    
+
     // Delete excess rows
     var firstUnneededRow = frozenRows+reportRows;
     var rowsToDelete = sheet.getMaxRows() - (firstUnneededRow);

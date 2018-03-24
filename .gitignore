@@ -1,0 +1,5 @@
+.clasp.json
+.git
+node_modules/*
+GoogleDocs/triggerable.js
+Test/*

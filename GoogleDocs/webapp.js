@@ -33,18 +33,18 @@ function deleteRowsFromSheet(options) {
   "use strict";
 
   var sheet = getSheet(options);
-  
+
   var sheetValues = sheet.getDataRange().getValues();
 
   var spreadsheetKeys = sheetValues[0];
-  
+
   var colsToCheck = [];
   var valsToCheck = [];
-  
+
   if (options.matchOn===undefined || options.matchOn.length===0) {
     throw "\"matchOn\" criteria must be defined in options";
   }
-  
+
   var index;
   options.matchOn.forEach(function setupMatching(criterion) {
     Logger.log(criterion);

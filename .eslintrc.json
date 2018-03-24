@@ -1,0 +1,41 @@
+{
+    "env": {
+        "googleappsscript/googleappsscript": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "no-trailing-spaces": "error",
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "require-jsdoc": ["error", {
+            "require": {
+                "FunctionDeclaration": true,
+                "MethodDefinition": false,
+                "ClassDeclaration": false,
+                "ArrowFunctionExpression": false,
+                "FunctionExpression": false
+            }
+    }],
+
+        "semi": [
+            "error",
+            "always"
+        ]
+    },
+    "plugins": [
+        "googleappsscript"
+    ]
+}

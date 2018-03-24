@@ -8,20 +8,20 @@
  */
 function audit(options) {
   "use strict";
-  
+
   var spreadsheet = getSpreadsheet(options);
-  
+
   options.sheet = "Summary";
-  
+
   var summarySheet = spreadsheet.getSheetByName(options.sheet);
-  
+
   var detailSheet;
-  
+
   Logger.log(options);
-  
+
   if (options.testCases !== undefined) {
     var results;
-    
+
     summarySheet.insertRows(1, options.testCases.length+1);
     var dividerRow = summarySheet.getRange("1:1");
     dividerRow.clear();
@@ -29,7 +29,7 @@ function audit(options) {
     dividerRow.setFontColor("white");
     dividerRow.setFontWeight("normal");
     dividerRow.setValues([["Test Set: " + new Date().toLocaleString(),"Result"]]);
-    
+
     options.testCases.forEach(function(audit, index) {
       results = query(audit.query);
       var row;
@@ -39,7 +39,7 @@ function audit(options) {
         row.setBackground("white");
         row.setFontColor("black");
         row.setFontWeight("normal");
-        
+
         options.createSheet = false;
         detailSheet = spreadsheet.getSheetByName(audit.name);
         if (detailSheet !== null) {
@@ -51,16 +51,16 @@ function audit(options) {
         row.setBackground("white");
         row.setFontColor("red");
         row.setFontWeight("normal");
-        
+
         options.sheet = audit.name;
         options.createSheet = true;
         detailSheet = getSheet(options).clearContents().setTabColor("red");
-        
+
         var keys = (Object.keys(results[0])).map(function (str) {
           return str.replace(/_/g," ");
         });
         detailSheet.appendRow(keys);
-        
+
         var resultsRecords = results.map(function (result) {
           var array = [];
           for (var value in result) {
@@ -78,7 +78,7 @@ function audit(options) {
           }
           return array;
         });
-        
+
         resultsRecords.forEach(function(resultRecord) {
           detailSheet.appendRow(resultRecord);
         });

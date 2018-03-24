@@ -86,7 +86,7 @@ function query(queryString) {
   if (credentials==null) {
     throw "StarRez credentials could not be found. Please run setup function.";
   }
-  
+
   // Set request parameters for web request
   var params = {
     headers: {
@@ -94,7 +94,7 @@ function query(queryString) {
       "Authorization": credentials
     }
   };
-  
+
   // If requestBody parameter exists, change method to POST and set requestBody as payload.
   if (typeof queryString == "string") {
     params.contentType = "text/plain";
@@ -104,15 +104,15 @@ function query(queryString) {
   else {
     throw "Invalid query string.";
   }
-    
+
   // Run the query
   var endpoint = PropertiesService.getScriptProperties().getProperty("STARREZ_API_ENDPOINT")+"services/query";
   if (endpoint==null) {
     throw "StarRez API Endpoint could not be found. Please run setup function.";
   }
-  
+
   var resp = UrlFetchApp.fetch(endpoint, params);
-  
+
   if (resp.getResponseCode()==200) {
     //Logger.log( "Sucessful query: " + resp.getContentText() );
     return JSON.parse(resp.getContentText());
@@ -221,10 +221,10 @@ function getRoomLocationTable() {
   var CACHE_TIME = 21600; // Maximum of 6 hours = 21600 seconds
 
   var roomLocationTableQuery = "SELECT RoomLocationID, [Building Code], Description, WebDescription FROM RoomLocation WHERE RecordTypeEnum=0";
-  
+
   //cache.remove("RoomLocationTable");
   var roomLocationTable = cache.get("RoomLocationTable");
-  
+
   if (roomLocationTable!=null) {
     Logger.log("Using cached Room Location table\n");
     return JSON.parse( roomLocationTable );
@@ -238,7 +238,7 @@ function getRoomLocationTable() {
 }
 
 /**
- * Get an cached instance of RegExp that will match any Room Location based on any of several values 
+ * Get an cached instance of RegExp that will match any Room Location based on any of several values
  * @param {string} buildingString The Description, WebDescription, or Building Code (CustomString1) of a RoomLocation
  * @return {RoomLocation}
  */
@@ -247,7 +247,7 @@ function getRoomLocationRegExp() {
   var CACHE_TIME = 21600; // Maximum of 6 hours = 21600 seconds
 
   var roomLocationRegExp = cache.get("RoomLocationRegExp");
-  
+
   if (roomLocationRegExp!=null) {
     Logger.log("Using cached Room Location RegExp");
     return new RegExp(roomLocationRegExp,"gi");
@@ -255,14 +255,14 @@ function getRoomLocationRegExp() {
   else {
     Logger.log("Generating Room Location RegExp");
     var roomLocationTable = getRoomLocationTable();
-    
+
     var matches = [];
     roomLocationTable.map(function(roomLocation) {
       matches.push( roomLocation.WebDescription );
       matches.push( roomLocation.Description );
       matches.push( roomLocation.Building_Code );
     });
-    
+
     roomLocationRegExp = "(?:\\b)("+matches.join("|")+")(?:\\b)";
     cache.put("RoomLocationRegExp", roomLocationRegExp,CACHE_TIME);
     return new RegExp(roomLocationRegExp,"gi");
@@ -278,19 +278,19 @@ function findRoomLocation(buildingString) {
 
   // Load Room Location table from StarRez
   var roomLocationTable = getRoomLocationTable();
-  
+
   var codePattern;
   var descriptionPattern;
   var webDescriptionPattern;
 
   // Check if building string exists in Room Location Descriptions
   roomLocationTable.forEach(function(RoomLocation) {
-    
+
     codePattern = new RegExp(RoomLocation.Building_Code,"i");
     descriptionPattern = new RegExp(RoomLocation.Description,"i");
     webDescriptionPattern = new RegExp(RoomLocation.WebDescription,"i");
-    
-    if ( 
+
+    if (
       ( typeof buildingString==="number" && buildingString==RoomLocation.RoomLocationID ) ||
       ( typeof buildingString==="string" && ( codePattern.test(buildingString) || descriptionPattern.test(buildingString) || webDescriptionPattern.test(buildingString) ) )
     ) {

@@ -1,3 +1,4 @@
+
 /* globals updateGoogleSheetFromStarRez */
 
 /* exported updateExample */
@@ -31,7 +32,7 @@ function updateExample() {
 
     // Optional: Load report data into a specific sheet (by index or name) within the spreadsheet. Defaults to first sheet, if not specified.
     "sheet": "TestSheet",
-    
+
     // Optional: Specify an error message to display when the report has no results.
     "noRecordsMessage": "There are no examples to display."
   };

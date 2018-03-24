@@ -1,0 +1,28 @@
+{
+  "name": "starrezgooglescripts",
+  "version": "1.0.0",
+  "description": "StarRez Google Scripts",
+  "main": "Test/test.js",
+  "dependencies": {
+    "eslint": "^4.19.0",
+    "eslint-plugin-googleappsscript": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "lint": "eslint --fix .",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avb100/starrez-google-scripts.git"
+  },
+  "keywords": [
+    "StarRez"
+  ],
+  "author": "Adam Bernot <avb100@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/avb100/starrez-google-scripts/issues"
+  },
+  "homepage": "https://github.com/avb100/starrez-google-scripts#readme"
+}
