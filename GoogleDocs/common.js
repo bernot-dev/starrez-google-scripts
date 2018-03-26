@@ -210,8 +210,8 @@ function objectArrayTo2dArray (resultObjectArray) {
       }
       return array;
     });
-    var keys = Object.keys(resultObjectArray[0]).
-      map(function underscoreToSpace (str) {
+    var keys = Object.keys(resultObjectArray[0])
+      .map(function underscoreToSpace (str) {
         return str.replace(/_/g, " ");
       });
     array2d.unshift(keys);

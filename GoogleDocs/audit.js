@@ -74,11 +74,11 @@ function audit (options) {
 
         options.sheet = testCase.name;
         options.createSheet = true;
-        detailSheet = getSheet(options).clearContents().
-          setTabColor("red");
+        detailSheet = getSheet(options).clearContents()
+          .setTabColor("red");
 
-        var keys = Object.keys(results[0]).
-          map(function underscoresToSpaces (str) {
+        var keys = Object.keys(results[0])
+          .map(function underscoresToSpaces (str) {
             return str.replace(/_/g, " ");
           });
         detailSheet.appendRow(keys);
@@ -87,10 +87,10 @@ function audit (options) {
           var array = [];
           for (var value in result) {
             if (typeof result[value] === "string") {
-              if (/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})$/g.
-                test(result[value])) {
-                array.push(new Date(result[value].
-                  replace(
+              if (/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})$/g
+                .test(result[value])) {
+                array.push(new Date(result[value]
+                  .replace(
                     /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})$/g,
                     "$1/$2/$3 $4:$5:$6"
                   )));
