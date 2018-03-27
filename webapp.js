@@ -6,7 +6,7 @@
  * Insert a new row into a sheet and delete the last row
  * @param {object} options Must contain at least spreadsheetId/spreadsheetUrl
  */
-function updateLiveFeed (options) {
+function updateLiveFeed(options) {
   var sheet = getSheet(options);
 
   // Insert row just below top row
@@ -30,7 +30,7 @@ function updateLiveFeed (options) {
  * column heading in the spreadsheet, and the value should be the value of a
  * cell in the column of the key that will result in the row being deleted.
  */
-function deleteRowsFromSheet (options) {
+function deleteRowsFromSheet(options) {
   var sheet = getSheet(options);
 
   var sheetValues = sheet.getDataRange().getValues();
@@ -45,7 +45,7 @@ function deleteRowsFromSheet (options) {
   }
 
   var index;
-  options.matchOn.forEach(function setupMatching (criterion) {
+  options.matchOn.forEach(function setupMatching(criterion) {
     Logger.log(criterion);
     index = spreadsheetKeys.indexOf(criterion.key);
     if (index >= 0) {
@@ -77,7 +77,7 @@ function deleteRowsFromSheet (options) {
  * @param {object} event The incoming GET or POST data. Must specify and action
  * and any required parameters for that action.
  */
-function processRequest (event) {
+function processRequest(event) {
   var output = ContentService.createTextOutput();
   output.setMimeType(ContentService.MimeType.TEXT);
 
@@ -125,7 +125,7 @@ function processRequest (event) {
  * Receive incoming GET request
  * @param {object} event Incoming GET request data
  */
-function doGet (event) {
+function doGet(event) {
   return processRequest(event);
 }
 
@@ -133,6 +133,6 @@ function doGet (event) {
  * Receive incoming POST request
  * @param {object} event Incoming POST request data
  */
-function doPost (event) {
+function doPost(event) {
   return processRequest(event);
 }

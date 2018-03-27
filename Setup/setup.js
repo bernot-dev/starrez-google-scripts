@@ -1,43 +1,58 @@
-/* exported setupEndpoint setupCredentials */
+var shell = require('shelljs');
+var fs = require('fs');
+var open = require('open');
+
+const deploymentFile = "deployment.json";
 
 /**
- * To set up your configuration:
- * 1. Publish -> Deploy as Web App...
- * 2. Choose options and deploy.
- * 3. Navigate browser to Web App URL.
+ * Gets the web app URL from a deployment ID.
+ * @param  {string} deploymentId The deployment ID
+ * @return {string}          The URL of the web app
  */
+var getWebAppURL = function(deploymentId) {
+    return "https://script.google.com/macros/s/" + deploymentId + "/dev";
+};
 
-/**
- * Set up endpoint for StarRez REST API calls
- * @param {string} shortName StarRez customer shortname
- */
-function setupEndpoint (shortName) {
-  var scriptProperties = PropertiesService.getScriptProperties();
-  var endpointPattern = /^\w{2,16}$/;
-  if (typeof shortName === "string" && endpointPattern.test(shortName)) {
-    scriptProperties.setProperty("STARREZ_API_ENDPOINT", "https://" + shortName + ".starrezhousing.com/StarRezRest");
-    Logger.log("Customer shortname updated");
-    return true;
-  }
-
-  throw new Error("Invalid Customer Shortname");
+if (!shell.which('clasp')) {
+    shell.echo('clasp not found');
+    shell.exit(1);
 }
 
-/**
- * Set up credentials for StarRez REST API calls
- * @param {string} username StarRez SecurityUser Username
- * @param {string} token StarRez Web Services Token
- */
-function setupCredentials (username, token) {
-  var userProperties = PropertiesService.getUserProperties();
-  var usernamePattern = /^\w{1,100}$/;
-  var tokenPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
-  if (typeof username === "string" && usernamePattern.test(username) && typeof token === "string" && tokenPattern.test(token)) {
-    var credentials = Utilities.base64Encode(username + ":" + token, Utilities.Charset.UTF_8);
-    userProperties.setProperty("STARREZ_CREDENTIALS", "Basic " + credentials);
-    Logger.log("Credentials updated");
-    return true;
-  }
-
-  throw new Error("Invalid username or web services token.");
+if(!shell.exec('clasp login', {silent:false})) {
+    shell.echo('Unable to log in with clasp.');
+    shell.exit(1);
 }
+
+if (!shell.exec('clasp create StarRezGoogleScripts', {silent:false})) {
+    shell.echo('Unable to create project');
+    shell.exit(1);
+}
+
+if(!shell.exec('clasp push', {silent:false})) {
+    shell.echo('Unable to list versions with clasp.');
+    shell.exit(1);
+}
+
+var deployment;
+
+if (fs.existsSync(deploymentFile)) {
+    deployment = JSON.parse(String(fs.readFileSync(deploymentFile)));
+} else {
+    var deployOutput = shell.exec('clasp deploy', {silent:false});
+    var deploymentIdPattern = /(?<=- )[\w-]{60,80}(?= )/;
+    var deploymentVersionPattern = /(?<=@)\d+(?=.)/;
+
+    deployment.id = deployOutput.match(deploymentIdPattern);
+    deployment.version = deployOutput.match(deploymentVersionPattern);
+}
+
+shell.echo("Deployment ID: " + deployment.id);
+shell.echo("Deployment Version: " + deployment.version);
+
+deployment.webAppURL = getWebAppURL(deployment.id);
+
+shell.echo("Web App URL (dev): " + deployment.webAppURL);
+
+fs.writeFileSync(deploymentFile,JSON.stringify(deployment));
+
+open(deployment.webAppURL);

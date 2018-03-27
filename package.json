@@ -2,15 +2,22 @@
   "name": "starrezgooglescripts",
   "version": "1.0.0",
   "description": "StarRez Google Scripts",
-  "main": "Test/test.js",
+  "main": "",
   "dependencies": {
+    "@google/clasp": "^1.1.5",
     "eslint": "^4.19.0",
-    "eslint-plugin-googleappsscript": "^1.0.0"
+    "eslint-plugin-googleappsscript": "^1.0.0",
+    "open": "^0.0.5",
+    "shelljs": "^0.8.1"
   },
   "devDependencies": {},
   "scripts": {
+    "echo": "cat README.md",
+    "setup": "clasp login && clasp create StarRezGoogleScripts && clasp push && clasp deploy",
     "lint": "eslint --fix .",
-    "test": "jest"
+    "shelljs": "node Setup/setup.js",
+    "update": "git pull && clasp push",
+    "versions": "clasp versions"
   },
   "repository": {
     "type": "git",

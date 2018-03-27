@@ -35,13 +35,13 @@
                 localStorage.shortName = $scope.shortName;
 
                 google.script.run
-                  .setupEndpoint($scope.shortName);
+                  .configEndpoint($scope.shortName);
                 localStorage.username = $scope.username;
                 localStorage.token = $scope.token;
                 google.script.run
                   .withFailureHandler(userPropertiesNotSaved)
                   .withSuccessHandler(userPropertiesSaved)
-                  .setupCredentials($scope.username, $scope.token);
+                  .configCredentials($scope.username, $scope.token);
                 $scope.userProperties.$setPristine(true);
             }
         });
