@@ -98,7 +98,8 @@ function processRequest (event) {
     ) {
       options = event.parameters;
     } else {
-      throw new Error("No input found!");
+      // Default is to run setup web app
+      return HtmlService.createHtmlOutputFromFile("Setup/index.html");
     }
 
     if (typeof options.action === "string") {

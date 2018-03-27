@@ -1,4 +1,4 @@
-/* global callApi getSheet objectArrayTo2dArray */
+/* global callApi formatSheet formatTitleRow getSheet objectArrayTo2dArray */
 
 /* exported updateGoogleSheetFromStarRez */
 
@@ -14,7 +14,7 @@ function getStarRezReport (options) {
     throw new Error("StarRez \"reportId\" is required, but was not defined.");
   }
 
-  // Assemble request path
+  // Assemble path
   var path = "/services/getreport/" + options.reportId;
 
   // Set request parameters for web request
@@ -49,11 +49,8 @@ function updateGoogleSheetFromStarRez (options) {
   if (report === undefined) {
     Logger.log("Skipping processing of ReportID: " + options.reportId);
   } else {
+    formatTitleRow(sheet);
     var frozenRows = sheet.getFrozenRows();
-    if (frozenRows === 0) {
-      sheet.setFrozenRows(1);
-      frozenRows = 1;
-    }
 
     var reportRows;
     var reportCols;
@@ -85,11 +82,7 @@ function updateGoogleSheetFromStarRez (options) {
       targetRange.setValues(report);
     }
 
-    // Delete excess rows
-    var firstUnneededRow = frozenRows + reportRows;
-    var rowsToDelete = sheet.getMaxRows() - firstUnneededRow;
-    if (rowsToDelete > 0) {
-      sheet.deleteRows(firstUnneededRow, rowsToDelete);
-    }
+    // Clean up formatting
+    formatSheet(sheet);
   }
 }

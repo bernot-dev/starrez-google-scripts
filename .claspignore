@@ -1,4 +1,8 @@
 **/**
 !appsscript.json
+!starrez.js
+!webapp.js
 !Gmail/**.js
 !GoogleDocs/**.js
+!Setup/**.js
+!Setup/**.html

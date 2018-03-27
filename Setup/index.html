@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <base target="_top">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script>
+        var setupApp = angular.module('setupApp', []);
+
+        setupApp.controller('userPropertiesController', function($scope) {
+            $scope.shortName = localStorage.shortName;
+            $scope.endpoint = function() {
+                if ($scope.shortName === undefined) {
+                    return "";
+                } else {
+                    return "https://" + $scope.shortName + ".starrezhousing.com/StarRezRest";
+                }
+            }
+            $scope.username = localStorage.username;
+            $scope.userPropertiesSaved = false;
+
+            function userPropertiesSaved() {
+              console.log("User properties saved!");
+              $scope.userPropertiesSaved = true;
+              $scope.$apply();
+            }
+
+            function userPropertiesNotSaved() {
+              console.log("Failed to save endpoint");
+              $scope.userPropertiesSaved = false;
+              $scope.$apply();
+            }
+
+            $scope.updateUserProperties = function() {
+                localStorage.shortName = $scope.shortName;
+
+                google.script.run
+                  .setupEndpoint($scope.shortName);
+                localStorage.username = $scope.username;
+                localStorage.token = $scope.token;
+                google.script.run
+                  .withFailureHandler(userPropertiesNotSaved)
+                  .withSuccessHandler(userPropertiesSaved)
+                  .setupCredentials($scope.username, $scope.token);
+                $scope.userProperties.$setPristine(true);
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        input:invalid {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w3-container">
+        <h2>Setup</h2>
+        <form name="userProperties" ng-app="setupApp">
+            <table class="w3-table w3-bordered w3-striped" ng-controller="userPropertiesController" style="width: auto;">
+                <colgroup>
+                    <col span="1" style="width: 30%;">
+                        <col span="1" style="width: 70%;">
+                </colgroup>
+                <thead>
+                    <th>User Properties</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Customer Shortname</td>
+                        <td>
+                            <input maxlength="16" name="shortName" ng-model="shortName" pattern="^\w{2,16}$" size="16" type="text" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REST API Endpoint</td>
+                        <td>
+                            <span>{{endpoint()}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td>
+                            <span><input maxlength="100" name="username" ng-model="username" pattern="^\w{2,100}$" size="36" type="text" required></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Web Services Token</td>
+                        <td>
+                            <span><input maxlength="36" name="token" ng-model="token" pattern="^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" size="36" type="password" required></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <button class="w3-btn w3-green w3-ripple" ng-click="updateUserProperties()" ng-disabled="userProperties.$pristine || userProperties.$invalid">Save</button>
+                        </td>
+                        <td>
+                          <span ng-show="userPropertiesSaved && userProperties.$pristine">User properties saved</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>

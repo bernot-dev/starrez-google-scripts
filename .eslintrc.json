@@ -75,6 +75,7 @@
         "max-len": [
             "error",
             {
+                "ignoreRegExpLiterals": true,
                 "ignoreStrings": true,
                 "ignoreUrls": true
             }
