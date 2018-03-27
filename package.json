@@ -12,12 +12,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "echo": "cat README.md",
-    "setup": "clasp login && clasp create StarRezGoogleScripts && clasp push && clasp deploy",
+    "setup": "node Setup/setup.js",
     "lint": "eslint --fix .",
-    "shelljs": "node Setup/setup.js",
-    "update": "git pull && clasp push",
-    "versions": "clasp versions"
+    "update": "git pull && clasp push"
   },
   "repository": {
     "type": "git",
