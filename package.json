@@ -15,7 +15,7 @@
   "scripts": {
     "setup": "node Setup/setup.js",
     "lint": "eslint --fix .",
-    "update": "git pull && clasp push"
+    "update": "clasp pull && git fetch --all && git reset --hard origin/master && clasp push"
   },
   "repository": {
     "type": "git",

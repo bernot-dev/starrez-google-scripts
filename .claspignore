@@ -1,8 +1,9 @@
 **/**
 !appsscript.json
+!config.js
+!index.html
 !starrez.js
 !webapp.js
 !Gmail/**.js
 !GoogleDocs/**.js
-!Setup/**.js
-!Setup/**.html
+!HangoutsChat/**.js
