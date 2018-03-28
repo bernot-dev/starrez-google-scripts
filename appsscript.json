@@ -1,13 +1,17 @@
 {
-  "timeZone": "America/New_York",
   "dependencies": {
-  },
-  "webapp": {
-    "access": "ANYONE_ANONYMOUS",
-    "executeAs": "USER_DEPLOYING"
   },
   "exceptionLogging": "STACKDRIVER",
   "executionApi": {
     "access": "ANYONE"
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/gmail.send",
+    "https://www.googleapis.com/auth/spreadsheets"
+  ],
+  "timeZone": "America/New_York",
+  "webapp": {
+    "access": "ANYONE_ANONYMOUS",
+    "executeAs": "USER_DEPLOYING"
   }
 }
