@@ -2,6 +2,7 @@
 <html lang="en-US">
 
 <head>
+    <title>StarRez Google Scripts Configuration</title>
     <base target="_top">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script>
@@ -39,9 +40,13 @@
                 localStorage.username = $scope.username;
                 localStorage.token = $scope.token;
                 google.script.run
+                  .configCredentials($scope.username, $scope.token);
+
+                localStorage.email = $scope.email;
+                google.script.run
                   .withFailureHandler(userPropertiesNotSaved)
                   .withSuccessHandler(userPropertiesSaved)
-                  .configCredentials($scope.username, $scope.token);
+                  .configEmail($scope.email);
                 $scope.userProperties.$setPristine(true);
             }
         });
@@ -90,6 +95,12 @@
                         <td>Web Services Token</td>
                         <td>
                             <span><input maxlength="36" name="token" ng-model="token" pattern="^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" size="36" type="password" required></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            <span><input maxlength="100" name="email" ng-model="email" size="36" type="email" required></span>
                         </td>
                     </tr>
                 </tbody>

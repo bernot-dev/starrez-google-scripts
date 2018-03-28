@@ -33,13 +33,15 @@ if (!shell.exec("clasp push", {"silent": false})) {
   shell.exit(1);
 }
 
-var deployment;
+var deployment = {};
 
 if (fs.existsSync(deploymentFile)) {
   deployment = JSON.parse(String(fs.readFileSync(deploymentFile)));
 } else {
   var deployOutput = shell.exec("clasp deploy", {"silent": false});
-  var deploymentIdPattern = /(?:- )[\w-]{60,80}(?= )/;
+  // eslint-disable-next-line
+  var deploymentIdPattern = /(?<=- )[\w-]{60,80}(?= )/;
+  // eslint-disable-next-line
   var deploymentVersionPattern = /(?<=@)\d+(?=.)/;
 
   deployment.id = deployOutput.match(deploymentIdPattern);

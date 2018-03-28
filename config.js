@@ -1,4 +1,4 @@
-/* exported configEndpoint configCredentials */
+/* exported configCredentials configEndpoint configEmail */
 
 /**
  * To set up your configuration:
@@ -40,4 +40,19 @@ function configCredentials(username, token) {
   }
 
   throw new Error("Invalid username or web services token.");
+}
+
+/**
+ * Set up e-mail for sending reports
+ * @param {string} email E-mail address of owner of script
+ */
+function configEmail(email) {
+  var userProperties = PropertiesService.getUserProperties();
+  if (typeof email === "string") {
+    userProperties.setProperty("EMAIL", email);
+    Logger.log("Email updated");
+    return true;
+  }
+
+  throw new Error("Invalid email");
 }

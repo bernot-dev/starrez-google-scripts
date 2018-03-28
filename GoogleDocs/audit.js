@@ -12,6 +12,9 @@
  * property)
  */
 function audit(options) {
+
+  var failureCount = 0;
+  
   var spreadsheet = getSpreadsheet(options);
 
   options.sheet = "Summary";
@@ -61,6 +64,7 @@ function audit(options) {
           spreadsheet.deleteSheet(detailSheet);
         }
       } else {
+        failureCount += 1;
         row = summarySheet.getRange(index + 2 + ":" + (index + 2));
         row.setValues([
           [
@@ -110,5 +114,8 @@ function audit(options) {
         formatSheet(detailSheet);
       }
     });
+    if (options.email === true) {
+      sendMeEmailNotification("StarQL Audit Results", "Number of failures: " + failureCount + "\nSpreadsheet: " + spreadsheet.getUrl());
+    }
   }
 }
