@@ -12,4 +12,15 @@ Several solutions are divided into folders, based on the Google product they int
 4. Run `git clone https://github.com/avb100/starrez-google-scripts`
 5. Run `cd starrez-google-scripts` to enter the directory you just cloned.
 6. Run `npm install` to install dependencies. This may require additional privileges.
-7. Run `npm run setup`. This will guide you through several more steps and launch the web app for configuration.
+7. Run `npm run setup`. This will automate several preliminary steps and launch the web app for configuration.
+8. Copy or rename `GoogleDocs/triggerable.example.js` to `GoogleDocs/triggerable.js` and set up triggers!
+
+### Update from Command Line (Dangerous)
+
+`npm run update` will use git and [clasp](https://developers.google.com/apps-script/guides/clasp) to perform the following steps:
+
+1. Pull all files from your Google Apps Script project to your local copy. (`clasp pull`)
+2. Overwrite all local files that exist on GitHub. (`git fetch --all && git reset --hard origin/master`)
+3. Push your local copy back to your project. (`clasp push`)
+
+If all goes well (and .gitignore and .claspignore are set up correctly), this should result in saving the most recent versions of any custom files on your Google Apps Script (like triggerable.js) while overwriting all of the other source code with the latest version. If all does not go well (e.g. you are customizing code or a new version overwrites your existing file), your work will be lost. Use at your own risk.
