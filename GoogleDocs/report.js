@@ -8,7 +8,7 @@
  * (CustomString1) of a RoomLocation
  * @return {string[][]}
  */
-function getStarRezReport (options) {
+function getStarRezReport(options) {
   // Ensure Report ID is set
   if (options.reportId === undefined) {
     throw new Error("StarRez \"reportId\" is required, but was not defined.");
@@ -39,7 +39,7 @@ function getStarRezReport (options) {
  * Google Sheet and ReportID of StarRez report
  * @return {RoomLocation}
  */
-function updateGoogleSheetFromStarRez (options) {
+function updateGoogleSheetFromStarRez(options) {
   // Retrieve sheet from Google Spreadsheet
   var sheet = getSheet(options);
 

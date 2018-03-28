@@ -11,7 +11,7 @@
  * and testCases array (each testCase object must have a "name" and "query"
  * property)
  */
-function audit (options) {
+function audit(options) {
   var spreadsheet = getSpreadsheet(options);
 
   options.sheet = "Summary";
@@ -40,7 +40,7 @@ function audit (options) {
       ]
     ]);
 
-    options.testCases.forEach(function runTestCase (testCase, index) {
+    options.testCases.forEach(function runTestCase(testCase, index) {
       results = query(testCase.query);
       var row;
       if (results.length === 0) {
@@ -78,12 +78,12 @@ function audit (options) {
           .setTabColor("red");
 
         var keys = Object.keys(results[0])
-          .map(function underscoresToSpaces (str) {
+          .map(function underscoresToSpaces(str) {
             return str.replace(/_/g, " ");
           });
         detailSheet.appendRow(keys);
 
-        var resultsRecords = results.map(function parseDates (result) {
+        var resultsRecords = results.map(function parseDates(result) {
           var array = [];
           for (var value in result) {
             if (typeof result[value] === "string") {
@@ -104,7 +104,7 @@ function audit (options) {
           return array;
         });
 
-        resultsRecords.forEach(function appendResultsToSheet (resultRecord) {
+        resultsRecords.forEach(function appendResultsToSheet(resultRecord) {
           detailSheet.appendRow(resultRecord);
         });
         formatSheet(detailSheet);

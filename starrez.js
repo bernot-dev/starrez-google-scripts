@@ -14,9 +14,11 @@ validDate
  * @param {object} params Parameters for request
  * @return {object} Object returned by API call
  */
-function callApi (path, params) {
+function callApi(path, params) {
   // Ensure credentials are set
-  var credentials = PropertiesService.getUserProperties().getProperty("STARREZ_CREDENTIALS");
+  var credentials = PropertiesService
+    .getUserProperties()
+    .getProperty("STARREZ_CREDENTIALS");
   if (credentials === null) {
     throw new Error("StarRez credentials could not be found. Please run setup function.");
   }
@@ -62,7 +64,9 @@ function callApi (path, params) {
     throw new Error("params must be an object");
   }
 
-  var endpoint = PropertiesService.getScriptProperties().getProperty("STARREZ_API_ENDPOINT");
+  var endpoint = PropertiesService
+    .getScriptProperties()
+    .getProperty("STARREZ_API_ENDPOINT");
   if (endpoint === null) {
     throw new Error("StarRez API Endpoint could not be found. Please run setup function.");
   }
@@ -96,7 +100,7 @@ function callApi (path, params) {
  * @param {string}
  * @return [Sheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/sheet}
  */
-function query (queryString) {
+function query(queryString) {
   var params = {};
 
   /**
@@ -119,7 +123,7 @@ function query (queryString) {
  * @param {object} options
  * @return {string[][]} 2D array of strings with results
  */
-function queryArray (queryString) {
+function queryArray(queryString) {
   var resultObjectArray = query(queryString);
   return objectArrayTo2dArray(resultObjectArray);
 }
@@ -129,11 +133,11 @@ function queryArray (queryString) {
  * @param {object[]} Array of results from StarRez query/report
  * @return {string[][]} 2D array of strings
  */
-function objectArrayTo2dArray (resultObjectArray) {
+function objectArrayTo2dArray(resultObjectArray) {
   if (resultObjectArray === undefined || resultObjectArray === null) {
     return resultObjectArray;
   } else if (typeof resultObjectArray === "object" && resultObjectArray instanceof Array && typeof resultObjectArray[0] === "object") {
-    var array2d = resultObjectArray.map(function mapObjectToArray (row) {
+    var array2d = resultObjectArray.map(function mapObjectToArray(row) {
       var array = [];
       for (var value in row) {
         if (typeof value === "string") {
@@ -143,7 +147,7 @@ function objectArrayTo2dArray (resultObjectArray) {
       return array;
     });
     var keys = Object.keys(resultObjectArray[0])
-      .map(function underscoreToSpace (str) {
+      .map(function underscoreToSpace(str) {
         return str.replace(/_/g, " ");
       });
     array2d.unshift(keys);
@@ -157,7 +161,7 @@ function objectArrayTo2dArray (resultObjectArray) {
  * Validate that a string representing a date can be parsed into a valid date
  * @param {string} date Date to be tested
  */
-function validDate (date) {
+function validDate(date) {
   if (Object.prototype.toString.call(date) === "[object Date]") {
     if (isNaN(date.valueOf())) {
       return false;
@@ -182,7 +186,7 @@ function validDate (date) {
  * Retrieve cached RoomLocation objects in StarRez
  * @return {object} An object representing the RoomLocation table in StarRez
  */
-function getRoomLocationTable () {
+function getRoomLocationTable() {
   var cache = CacheService.getScriptCache();
 
   // Maximum of 6 hours = 21600 seconds
@@ -216,7 +220,7 @@ function getRoomLocationTable () {
  * Code (CustomString1) of a RoomLocation
  * @return {RoomLocation}
  */
-function getRoomLocationRegExp () {
+function getRoomLocationRegExp() {
   var cache = CacheService.getScriptCache();
   // Maximum of 6 hours = 21600 seconds
   var CACHE_TIME = 21600;
@@ -228,7 +232,7 @@ function getRoomLocationRegExp () {
     var roomLocationTable = getRoomLocationTable();
 
     var matches = [];
-    roomLocationTable.forEach(function pushPotentialMatches (roomLocation) {
+    roomLocationTable.forEach(function pushPotentialMatches(roomLocation) {
       matches.push(roomLocation.WebDescription);
       matches.push(roomLocation.Description);
       matches.push(roomLocation.Building_Code);

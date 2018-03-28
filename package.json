@@ -13,7 +13,7 @@
   "devDependencies": {},
   "scripts": {
     "setup": "node Setup/setup.js",
-    "lint": "eslint --fix .",
+    "lint": "eslint --fix . && eslint --fix Setup/*",
     "update": "git pull && clasp push"
   },
   "repository": {

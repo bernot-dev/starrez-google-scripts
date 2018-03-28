@@ -17,7 +17,7 @@
  * end in ".../edit".
  * @returns {Spreadsheet} Returns the referenced [Spreadsheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet}
  */
-function getSpreadsheet (options) {
+function getSpreadsheet(options) {
   // Retrieve Google Spreadsheet
   var spreadsheet;
 
@@ -50,7 +50,7 @@ function getSpreadsheet (options) {
  * @param {string} [options.sheet]
  * @return [Sheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/sheet}
  */
-function getSheet (options) {
+function getSheet(options) {
   // Retrieve Google Spreadsheet
   var spreadsheet = getSpreadsheet(options);
 
@@ -85,7 +85,7 @@ function getSheet (options) {
  * Format a sheet according to suggested style
  * @param [Sheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/sheet}
  */
-function formatSheet (sheet) {
+function formatSheet(sheet) {
   deleteOutsideDataRange(sheet);
   formatTitleRow(sheet);
   autoResizeColumns(sheet);
@@ -95,7 +95,7 @@ function formatSheet (sheet) {
  * Automatically resize all columns in the sheet to match content
  * @param [Sheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/sheet}
  */
-function autoResizeColumns (sheet) {
+function autoResizeColumns(sheet) {
   for (var i = 1; i <= sheet.getLastColumn(); i += 1) {
     sheet.autoResizeColumn(i);
     Logger.log(String(i) + " of " + sheet.getLastColumn());
@@ -106,7 +106,7 @@ function autoResizeColumns (sheet) {
  * Delete all columns and rows that do not contain data
  * @param [Sheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/sheet}
  */
-function deleteOutsideDataRange (sheet) {
+function deleteOutsideDataRange(sheet) {
   var dataRange = sheet.getDataRange();
   if (dataRange.getLastColumn() < sheet.getMaxColumns()) {
     sheet.deleteColumns(
@@ -126,7 +126,7 @@ function deleteOutsideDataRange (sheet) {
  * Freeze and bold the title row
  * @param [Sheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/sheet}
  */
-function formatTitleRow (sheet) {
+function formatTitleRow(sheet) {
   if (sheet.getMaxRows() === 1) {
     sheet.insertRowAfter(1);
   }

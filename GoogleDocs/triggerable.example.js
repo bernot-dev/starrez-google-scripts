@@ -20,7 +20,7 @@
 /**
  * Example of a possible function to update a Google Sheet from StarRez
  */
-function updateExample () {
+function updateExample() {
   // Make an object that will hold all of the options
   var options = {
 

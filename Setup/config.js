@@ -1,4 +1,4 @@
-/* exported setupEndpoint setupCredentials */
+/* exported configEndpoint configCredentials */
 
 /**
  * To set up your configuration:
@@ -11,7 +11,7 @@
  * Set up endpoint for StarRez REST API calls
  * @param {string} shortName StarRez customer shortname
  */
-function configEndpoint (shortName) {
+function configEndpoint(shortName) {
   var scriptProperties = PropertiesService.getScriptProperties();
   var endpointPattern = /^\w{2,16}$/;
   if (typeof shortName === "string" && endpointPattern.test(shortName)) {
@@ -28,7 +28,7 @@ function configEndpoint (shortName) {
  * @param {string} username StarRez SecurityUser Username
  * @param {string} token StarRez Web Services Token
  */
-function configCredentials (username, token) {
+function configCredentials(username, token) {
   var userProperties = PropertiesService.getUserProperties();
   var usernamePattern = /^\w{1,100}$/;
   var tokenPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
