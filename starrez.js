@@ -4,6 +4,7 @@
 formatSheet
 findRoomLocation
 getRoomLocationRegExp
+getStarRezReport
 query
 queryArray
 validDate
@@ -96,6 +97,35 @@ function callApi(path, params) {
 }
 
 /**
+ * Convert an array of objects (as returned by StarRez) to a 2D array
+ * @param {object[]} Array of results from StarRez query/report
+ * @return {string[][]} 2D array of strings
+ */
+function objectArrayTo2dArray(resultObjectArray) {
+  if (resultObjectArray === undefined || resultObjectArray === null) {
+    return resultObjectArray;
+  } else if (typeof resultObjectArray === "object" && resultObjectArray instanceof Array && typeof resultObjectArray[0] === "object") {
+    var array2d = resultObjectArray.map(function mapObjectToArray(row) {
+      var array = [];
+      for (var value in row) {
+        if (typeof value === "string") {
+          array.push(row[value]);
+        }
+      }
+      return array;
+    });
+    var keys = Object.keys(resultObjectArray[0])
+      .map(function underscoreToSpace(str) {
+        return str.replace(/_/g, " ");
+      });
+    array2d.unshift(keys);
+    return array2d;
+  }
+
+  throw new Error("resultObjectArray must be an array of objects");
+}
+
+/**
  * Execute a StarQL query against the database
  * @param {string}
  * @return [Sheet]{@link https://developers.google.com/apps-script/reference/spreadsheet/sheet}
@@ -129,32 +159,34 @@ function queryArray(queryString) {
 }
 
 /**
- * Convert an array of objects (as returned by StarRez) to a 2D array
- * @param {object[]} Array of results from StarRez query/report
- * @return {string[][]} 2D array of strings
+ * Retrieve report from StarRez using getreport API as a 2D array of strings
+ * @param {object} options The Description, WebDescription, or Building Code
+ * (CustomString1) of a RoomLocation
+ * @return {string[][]}
  */
-function objectArrayTo2dArray(resultObjectArray) {
-  if (resultObjectArray === undefined || resultObjectArray === null) {
-    return resultObjectArray;
-  } else if (typeof resultObjectArray === "object" && resultObjectArray instanceof Array && typeof resultObjectArray[0] === "object") {
-    var array2d = resultObjectArray.map(function mapObjectToArray(row) {
-      var array = [];
-      for (var value in row) {
-        if (typeof value === "string") {
-          array.push(row[value]);
-        }
-      }
-      return array;
-    });
-    var keys = Object.keys(resultObjectArray[0])
-      .map(function underscoreToSpace(str) {
-        return str.replace(/_/g, " ");
-      });
-    array2d.unshift(keys);
-    return array2d;
+function getStarRezReport(options) {
+  // Ensure Report ID is set
+  if (options.reportId === undefined) {
+    throw new Error("StarRez \"reportId\" is required, but was not defined.");
   }
 
-  throw new Error("resultObjectArray must be an array of objects");
+  // Assemble path
+  var path = "/services/getreport/" + options.reportId;
+
+  // Set request parameters for web request
+  var params = {};
+
+  /**
+   * If requestBody parameter exists, change method to POST and set requestBody
+   * as payload.
+   */
+  if (options.requestBody !== undefined) {
+    params.contentType = "application/json";
+    params.payload = JSON.stringify(options.requestBody);
+  }
+
+  var report = callApi(path, params);
+  return objectArrayTo2dArray(report);
 }
 
 /**

@@ -99,7 +99,7 @@ function processRequest(event) {
       options = event.parameters;
     } else {
       // Default is to run setup web app
-      return HtmlService.createHtmlOutputFromFile("Setup/index.html");
+      return HtmlService.createHtmlOutputFromFile("index.html");
     }
 
     if (typeof options.action === "string") {

@@ -1,10 +1,10 @@
 {
     "env": {
-        "googleappsscript/googleappsscript": true
+        "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaVersion": 6
+        "ecmaVersion": 9
     },
     "rules": {
         "array-bracket-newline": "error",

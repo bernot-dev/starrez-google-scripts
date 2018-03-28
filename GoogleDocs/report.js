@@ -1,37 +1,6 @@
-/* global callApi formatSheet formatTitleRow getSheet objectArrayTo2dArray */
+/* global formatSheet formatTitleRow getSheet getStarRezReport */
 
 /* exported updateGoogleSheetFromStarRez */
-
-/**
- * Retrieve report from StarRez using getreport API as a 2D array of strings
- * @param {object} options The Description, WebDescription, or Building Code
- * (CustomString1) of a RoomLocation
- * @return {string[][]}
- */
-function getStarRezReport(options) {
-  // Ensure Report ID is set
-  if (options.reportId === undefined) {
-    throw new Error("StarRez \"reportId\" is required, but was not defined.");
-  }
-
-  // Assemble path
-  var path = "/services/getreport/" + options.reportId;
-
-  // Set request parameters for web request
-  var params = {};
-
-  /**
-   * If requestBody parameter exists, change method to POST and set requestBody
-   * as payload.
-   */
-  if (options.requestBody !== undefined) {
-    params.contentType = "application/json";
-    params.payload = JSON.stringify(options.requestBody);
-  }
-
-  var report = callApi(path, params);
-  return objectArrayTo2dArray(report);
-}
 
 /**
  * Populate a Google Sheet with data from a StarRez report
