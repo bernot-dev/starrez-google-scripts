@@ -86,7 +86,7 @@ function processRequest(event) {
     var options;
 
     if (
-      event !== "undefined" &&
+      event !== undefined &&
       event.postData !== undefined &&
       typeof event.postData.contents === "string"
     ) {
