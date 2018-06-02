@@ -13,7 +13,7 @@ Several solutions are divided into folders, based on the Google product they int
 5. Run `cd starrez-google-scripts` to enter the directory you just cloned.
 6. Run `npm install` to install dependencies. This may require additional privileges.
 7. Run `npm run setup`. This will automate several preliminary steps and launch the web app for configuration.
-8. Go to [Google Scripts](https://script.google.com/), open the project, and run the doGet() function in setup.gs. This will prompt you to authorize the application to access the neccessary portions of your Google account.
+8. Go to [Google Scripts](https://script.google.com/), open the project, and run the doGet() function in webapp.gs. This will prompt you to authorize the application to access the neccessary portions of your Google account.
 9. Copy or rename `GoogleDocs/triggerable.example.js` to `GoogleDocs/triggerable.js` and set up triggers!
 
 ### Update from Command Line (Dangerous)
