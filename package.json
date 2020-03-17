@@ -4,14 +4,16 @@
   "description": "StarRez Google Scripts",
   "main": "",
   "dependencies": {
-    "@google/clasp": "^1.1.5",
-    "eslint": "^4.19.0",
-    "eslint-plugin-googleappsscript": "^1.0.0",
-    "eslint-plugin-node": "^6.0.1",
-    "open": "^6.0.0",
-    "shelljs": "^0.8.1"
+    "@google/clasp": "^2.3.0",
+    "inquirer": "^7.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-googleappsscript": "^1.0.3",
+    "eslint-plugin-node": "^11.0.0",
+    "open": "^7.0.3",
+    "shelljs": "^0.8.3"
+  },
   "scripts": {
     "setup": "node Setup/setup.js",
     "lint": "eslint --fix .",
